@@ -16,8 +16,6 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "babel-plugin-react": "1.0.0",
-    "babel-preset-react": "6.24.1",
     "body-parser": "^1.9.2",
     "bootstrap": "^4.0.0-alpha.2",
     "cors": "^2.8.4",
@@ -27,6 +25,8 @@
     "jquery": "^3.3.1",
     "morgan": "^1.4.1",
     "mysql": "^2.4.2",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
     "popper.js": "^1.12.9",
     "react": "^15.6.1",
     "react-bootstrap": "^0.32.1",
@@ -41,6 +41,7 @@
   "devDependencies": {
     "babel-cli": "^6.7.5",
     "babel-register": "^6.7.2",
+    "babel-plugin-react": "1.0.0",
     "babel-core": "6.24.1",
     "babel-loader": "7.0.0",
     "style-loader": "^0.21.0",

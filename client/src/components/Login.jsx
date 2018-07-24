@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import {
   BrowserRouter as Router,
   Route,
@@ -25,6 +26,12 @@ export default class Login extends React.Component{
     this.setState({'password':e.target.value})
   }
 
+  googleSignIn(){
+    axios.get('/auth/google')
+      .then((res)=>console.log(res))
+      .catch(err=>console.log(err))
+  }
+
   render(){
     return(
       <div className="container-login">
@@ -49,6 +56,8 @@ export default class Login extends React.Component{
                 <div onClick={()=>this.props.onSignUp(this.state.email,this.state.password)} className="login-form-btn">
                   Sign Up
                 </div>
+                <a href="/auth/google">Sign In with Google</a>
+                
               </div>
           </form>
         </div>
