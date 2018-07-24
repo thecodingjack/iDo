@@ -72,17 +72,26 @@ let cors = require('cors');
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const {GOOGLE_CLIENTID,GOOGLE_CLIENTSECRET} = require('./config.js')
+let user = require('./model/model.js')
 let app = express()
 let port = process.env.PORT || 3000;
+
+passport.serializeUser((user,done)=>{
+  console.log({user})
+  done(null,user.id)
+})
+
+passport.deserializeUser((id,done)=>{
+  console.log({id})
+  user.deserialize(id,done)
+})
 
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENTID,
   clientSecret: GOOGLE_CLIENTSECRET,
   callbackURL: "http://localhost:3000/auth/google/callback"
   },(accessToken,refreshToken,profile,done)=>{
-  console.log(accessToken);
-  console.log(refreshToken);
-  console.log(profile);
+  user.googleSignIn(profile,done)
 }))
 
 
@@ -91,11 +100,9 @@ app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan('dev'));
-app.use(session({
-  secret: 'super-secret-12345',
-  resave: true,
-  saveUninitialized: true
-}));
+app.use(session({ secret: 'todo-secret', cookie: { maxAge: 600000 }}))
+app.use(passport.initialize());
+app.use(passport.session())
 
 app.use(express.static(__dirname + '/../client/dist'));
 
@@ -107,10 +114,16 @@ app.get(
 app.get(
   '/auth/google/callback',
   passport.authenticate('google'),
-  (req,res)=> res.redirect("/"))
+  (req,res)=> {
+    res.redirect("/")
+  })
 
 app.get('/api/logout', (req,res)=>{
   req.logout();
+  res.redirect('/')
+})
+
+app.get('/api/current_user', (req, res)=>{
   res.send(req.user)
 })
 
