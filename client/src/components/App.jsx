@@ -10,8 +10,13 @@ export default class App extends React.Component{
   }
 
   getUser(){
-    axios.get('/api/current_user')
+    axios.get('/auth/current_user')
       .then(res=> this.setState({user: res.data}))
+  }
+
+  logOut(){
+    axios.get('/auth/logout')
+      .then(()=>this.setState({user: undefined}))
   }
 
   componentDidMount(){
@@ -22,7 +27,10 @@ export default class App extends React.Component{
     return(
       <div className="app">
         {this.state.user
-        ? <div>Welcome</div>
+        ? <div>
+            <div>Welcome {this.state.user.name}</div>
+            <button onClick={()=>this.logOut()}>Log Out</button>
+          </div>
         : <Login onLogin={this.handleLogin} onSignUp={this.handleSignUp}/>} 
       </div>
     )
