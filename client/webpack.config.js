@@ -1,20 +1,15 @@
 var webpack = require('webpack');
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 var path = require('path');
-var SRC_DIR = path.join(__dirname, '/client/src');
-var DIST_DIR = path.join(__dirname, '/client/dist');
+var SRC_DIR = path.join(__dirname, '/src');
+var DIST_DIR = path.join(__dirname, '/dist');
 
 module.exports = {
-  entry: `${SRC_DIR}/index.js`,
-  output: {
-    filename: 'bundle.js',
-    path: DIST_DIR
-  },
-
   module: {
     rules: [
       {
         test: [/\.js$/, /\.jsx?$/],
-        include: SRC_DIR,
+        exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
           presets: ['env', 'react', 'stage-0']
@@ -35,9 +30,21 @@ module.exports = {
       },
     ]
   },
-  // externals: {
-  //   'react/addons': true, // important!!
-  //   'react/lib/ReactContext': true,
-  //   'react/lib/ExecutionEnvironment': true
-  // }
+  devServer: {
+    proxy: {
+      "/auth/*": {
+        "target": "http://localhost:3000"
+      },
+      "/api/*": {
+        "target": "http://localhost:3000"
+      }
+    },
+    historyApiFallback: true
+  },
+  plugins: [
+      new HtmlWebPackPlugin({
+      template: `${SRC_DIR}/index.html`,
+      filename: "./index.html"
+    })
+  ]
 };

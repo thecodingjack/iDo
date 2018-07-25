@@ -43,9 +43,9 @@ app.get('/api/todo',(req,res)=>{
   })
 })
 
-app.get('/*',(req,res)=>{
-  res.redirect('/')
-})
+// app.get('/*',(req,res)=>{
+//   res.redirect('/')
+// })
 
 app.listen(port,()=> console.log('Listening on : ' + port))
 

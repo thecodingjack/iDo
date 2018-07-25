@@ -7,11 +7,11 @@ authRouter.get('/google',
 
 authRouter.get('/google/callback',
   passport.authenticate('google'),
-  (req,res)=> res.redirect("/"))
+  (req,res)=> res.redirect("http://localhost:8080"))
 
 authRouter.get('/logout', (req,res)=>{
   req.logout()
-  res.redirect('/')
+  res.redirect('http://localhost:8080/')
 })
 
 authRouter.get('/current_user', (req, res)=>{

@@ -1,6 +1,13 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 import axios from 'axios'
-import Login from './Login.jsx';
+import Header from './Header.jsx'
+import Login from './Login.jsx'
+import Todos from './Todos.jsx'
 
 export default class App extends React.Component{
   constructor(props){
@@ -10,6 +17,9 @@ export default class App extends React.Component{
       user: undefined,
       todos: []
     }
+
+    this.handleInput = this.handleInput.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleInput(input){
@@ -32,9 +42,13 @@ export default class App extends React.Component{
 
   getUser(){
     axios.get('/auth/current_user')
-      .then(res=> {
-        this.setState({user: res.data})
-        this.getTodo(this.state.user._id)
+      .then(({data})=> {
+        if(data){
+          this.setState({user: data})
+          this.getTodo(this.state.user._id)
+        }else{
+
+        }
       })
   }
 
@@ -49,21 +63,32 @@ export default class App extends React.Component{
   
   render(){
     return(
-      <div className="app">
-        {this.state.user
-        ? <div>
-            <div>Welcome {this.state.user.name}</div>
-            <input onChange={(e)=>this.handleInput(e.target.value)}></input>
-            <div>
-              {this.state.todos.map(todo=>(
-                <div>{todo.todoItem}</div>
-              ))}
-            </div>
-            <button onClick={()=>this.handleSubmit()}>Create</button>
-            <button onClick={()=>this.logOut()}>Log Out</button>
-          </div>
-        : <Login onLogin={this.handleLogin} onSignUp={this.handleSignUp}/>} 
-      </div>
+      <Router>
+        <div>
+          <Header/>
+          <Route path="/" exact render={()=>( 
+              <Todos/>
+          )}/>
+          <Route path="/login" render={()=>(
+            <Login/>
+          )}/>
+        </div>
+      </Router>
+      // <div className="app">
+      //   {this.state.user
+      //   ? <div>
+      //       <div>Welcome {this.state.user.name}</div>
+      //       <input onChange={(e)=>this.handleInput(e.target.value)}></input>
+      //       <div>
+      //         {this.state.todos.map(todo=>(
+      //           <div>{todo.todoItem}</div>
+      //         ))}
+      //       </div>
+      //       <button onClick={()=>this.handleSubmit()}>Create</button>
+      //       <button onClick={()=>this.logOut()}>Log Out</button>
+      //     </div>
+      //   : <Login onLogin={this.handleLogin} onSignUp={this.handleSignUp}/>} 
+      // </div>
     )
   }
 }

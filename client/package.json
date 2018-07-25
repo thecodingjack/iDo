@@ -1,7 +1,8 @@
 {
-  "name": "i-do",
+  "name": "i-do-client",
   "version": "1.0.0",
   "description": "A todo app",
+  "main": "index.js",
   "author": "Jack Lim <github.com/thecodingjack>",
   "license": "UNLICENSED",
   "private": true,
@@ -9,23 +10,16 @@
     "node": ">=4.0.0"
   },
   "scripts": {
-    "server-dev": "nodemon server/index.js",
-    "start": "node server/index.js"
+    "start": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production",
+    "react-compile": "webpack -d --watch",
+    "heroku-postbuild": "webpack -p"
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "body-parser": "^1.9.2",
     "bootstrap": "^4.0.0-alpha.2",
-    "cors": "^2.8.4",
     "enzyme-redux": "^0.1.7",
-    "express": "^4.16.3",
-    "express-session": "^1.15.6",
     "jquery": "^3.3.1",
-    "mongoose": "^5.2.5",
-    "morgan": "^1.4.1",
-    "mysql": "^2.4.2",
-    "passport": "^0.4.0",
-    "passport-google-oauth20": "^1.0.0",
     "popper.js": "^1.12.9",
     "react": "^15.6.1",
     "react-bootstrap": "^0.32.1",
@@ -39,23 +33,25 @@
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
-    "babel-register": "^6.7.2",
-    "babel-plugin-react": "1.0.0",
     "babel-core": "6.24.1",
     "babel-loader": "7.0.0",
-    "style-loader": "^0.21.0",
-    "css-loader": "^1.0.0",
-    "file-loader": "^1.1.11",
+    "babel-plugin-react": "1.0.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "6.24.1",
+    "babel-register": "^6.7.2",
+    "css-loader": "^1.0.0",
     "enzyme": "2.8.2",
     "exports-loader": "0.6.4",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.2.0",
     "react-addons-test-utils": "15.6.0",
     "redux-mock-store": "1.2.3",
     "redux-test-utils": "0.1.2",
+    "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "0.4.3",
     "webpack": "^4.0.0",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
   }
 }
