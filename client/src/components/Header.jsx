@@ -2,7 +2,8 @@ import React from 'react'
 
 const Header = ()=>(
   <div>
-    Header
+    <div>Header</div>
+    <a href='/auth/logout'>Log Out</a>
   </div>
 )
 

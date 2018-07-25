@@ -36,9 +36,7 @@ app.post('/api/todo',(req,res)=>{
 
 app.get('/api/todo',(req,res)=>{
   let {userId} = req.query
-  console.log(req.query)
   todo.getUserTodos(userId,(err,results)=>{
-    console.log(results);
     res.send(results)
   })
 })
