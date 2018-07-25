@@ -3,8 +3,10 @@ let session = require('express-session')
 let morgan = require('morgan');
 let parser = require('body-parser');
 let cors = require('cors');
+require('./model/model')
 let passport = require('passport')
 require('./services/passport.js');
+let todo = require('./model/todo')
 
 var authRouter = require('./routes/authRoutes.js')
 
@@ -24,6 +26,22 @@ app.use(passport.session())
 
 app.use('/auth',authRouter)
 app.use(express.static(__dirname + '/../client/dist'));
+
+app.post('/api/todo',(req,res)=>{
+  let {userId,todoItem} = req.body
+  todo.createTodoItem(userId,todoItem,(err,result)=>{
+    res.send(result)
+  })
+})
+
+app.get('/api/todo',(req,res)=>{
+  let {userId} = req.query
+  console.log(req.query)
+  todo.getUserTodos(userId,(err,results)=>{
+    console.log(results);
+    res.send(results)
+  })
+})
 
 app.get('/*',(req,res)=>{
   res.redirect('/')

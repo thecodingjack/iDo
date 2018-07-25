@@ -10,7 +10,7 @@ authRouter.get('/google/callback',
   (req,res)=> res.redirect("/"))
 
 authRouter.get('/logout', (req,res)=>{
-  req.logout();
+  req.logout()
   res.redirect('/')
 })
 
