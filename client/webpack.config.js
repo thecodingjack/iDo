@@ -36,14 +36,11 @@ module.exports = {
   devServer: {
     proxy: {
       "/auth/*": {
-        "target": "http://[::1]:3000"
+        "target": "http://localhost:3000"
       },
       "/api/*": {
-        "target": "http://[::1]:3000"
+        "target": "http://localhost:3000"
       },
-      "**/main.js":{
-        "target": "http://[::1]:8080"
-      }
     },
     historyApiFallback: true
   },

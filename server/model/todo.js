@@ -6,6 +6,7 @@ let todoSchema = new Schema({
   username: String,
   title: String,
   todoItems: Array,
+  comments: Array,
   amount: Number,
 })
 
@@ -32,13 +33,19 @@ let getTodoById = (id,cb)=>{
 }
 
 let updateTodoById = (id,todoItems,cb)=>{
-  console.log(id)
-  console.log(cb)
   Todo.findByIdAndUpdate(id,{
     $set: {todoItems}
   },{new: true})
     .then(todo=>{
-      console.log(todo)
+      cb(null,todo)
+    })
+}
+
+let postComment = (id,comments,cb)=>{
+  Todo.findByIdAndUpdate(id,{
+    $set: {comments}
+  },{new: true})
+    .then(todo=>{
       cb(null,todo)
     })
 }
@@ -48,4 +55,5 @@ module.exports = {
   createTodoList,
   getTodoById,
   updateTodoById,
+  postComment,
 }

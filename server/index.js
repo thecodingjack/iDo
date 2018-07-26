@@ -62,6 +62,14 @@ app.post('/api/todo',(req,res)=>{
   })
 })
 
+app.post('/api/todo/comment',(req,res)=>{
+  console.log(req.body)
+  let{id,comments} = req.body
+  todo.postComment(id,comments,(err,result)=>{
+    res.send(result)
+  })
+})
+
 app.get('/api/friends',(req,res)=>{
   user.getAllUser((err,results)=>{
     res.send(results)

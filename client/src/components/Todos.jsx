@@ -56,13 +56,13 @@ export default class Todos extends React.Component{
                   </div>}
                 {this.state.todos.map(todoList=>(
                   <li>
-                    <Link to={{ pathname: `/${this.props.username}/${todoList.title}`, state: {id:todoList._id} }}>{todoList.title}</Link>
+                    <Link to={{ pathname: `/${this.props.username}/${todoList._id}`, state: {id:todoList._id} }}>{todoList.title}</Link>
                   </li>
                 ))}
               </div>
             )}/>
-            <Route path={`/${this.props.username}/:title`} render={(props)=>(
-              <TodoDetails title={props.match.params.title} id={props.location.state.id} isOwner={this.state.isOwner}/>
+            <Route path={`/${this.props.username}/:id`} render={(props)=>(
+              <TodoDetails id={props.match.params.id} isOwner={this.state.isOwner}/>
             )}/>
           </Switch>
         </div>
