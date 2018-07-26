@@ -48,6 +48,20 @@ app.get('/api/todos',(req,res)=>{
   })
 })
 
+app.get('/api/todo',(req,res)=>{
+  todo.getTodoById(req.query.id,(err,result)=>{
+    res.send(result)
+  })
+})
+
+app.post('/api/todo',(req,res)=>{
+  console.log(req.body)
+  let{id,todoItems} = req.body
+  todo.updateTodoById(id,todoItems,(err,result)=>{
+    res.send(result)
+  })
+})
+
 app.get('/api/friends',(req,res)=>{
   user.getAllUser((err,results)=>{
     res.send(results)

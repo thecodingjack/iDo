@@ -12,9 +12,9 @@ import TodoDetails from './TodoDetails.jsx';
 export default class Todos extends React.Component{
   constructor(props){
     super(props)
-    // this.username = props.history.location.pathname.substring(1)
+
     console.log(props.username)
-    this.state = {todos: []}
+    this.state = {todos: [], isOwner: props.username === props.currentUser.username}
     this.handleInput = this.handleInput.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -29,7 +29,7 @@ export default class Todos extends React.Component{
   }
 
   handleSubmit(){
-    this.createTodoList(this.username,this.state.input)
+    this.createTodoList(this.props.username,this.state.input)
   }
 
   createTodoList(username,title){
@@ -49,17 +49,20 @@ export default class Todos extends React.Component{
             <Route path={`/${this.props.username}`} exact render={()=>(
               <div>
                 <h2>Todos</h2>
-                <input onChange={(e)=>this.handleInput(e.target.value)}></input>
-                <button onClick={()=>this.handleSubmit()}>Create</button>
+                {this.state.isOwner &&
+                  <div> 
+                    <input onChange={(e)=>this.handleInput(e.target.value)}></input>
+                    <button onClick={()=>this.handleSubmit()}>Create A New List</button>
+                  </div>}
                 {this.state.todos.map(todoList=>(
                   <li>
-                    <Link to={`/${this.props.username}/${todoList.title}`}>{todoList.title}</Link>
+                    <Link to={{ pathname: `/${this.props.username}/${todoList.title}`, state: {id:todoList._id} }}>{todoList.title}</Link>
                   </li>
                 ))}
               </div>
             )}/>
             <Route path={`/${this.props.username}/:title`} render={(props)=>(
-              <TodoDetails title={props.match.params.title}/>
+              <TodoDetails title={props.match.params.title} id={props.location.state.id} isOwner={this.state.isOwner}/>
             )}/>
           </Switch>
         </div>

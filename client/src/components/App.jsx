@@ -58,7 +58,7 @@ export default class App extends React.Component{
                   <Friends user={this.state.user}/>
                 )}/>
                 <Route path="/:username" render={(props)=>(
-                  <Todos username={props.match.params.username}/>
+                  <Todos username={props.match.params.username} currentUser={this.state.user}/>
                 )}/>
               </Switch>
             </div>

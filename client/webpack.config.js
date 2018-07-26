@@ -5,6 +5,9 @@ var SRC_DIR = path.join(__dirname, '/src');
 var DIST_DIR = path.join(__dirname, '/dist');
 
 module.exports = {
+  output:{
+    publicPath : '/'
+  },
   module: {
     rules: [
       {
@@ -33,10 +36,13 @@ module.exports = {
   devServer: {
     proxy: {
       "/auth/*": {
-        "target": "http://localhost:3000"
+        "target": "http://[::1]:3000"
       },
       "/api/*": {
-        "target": "http://localhost:3000"
+        "target": "http://[::1]:3000"
+      },
+      "**/main.js":{
+        "target": "http://[::1]:8080"
       }
     },
     historyApiFallback: true
