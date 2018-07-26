@@ -20,11 +20,9 @@ export default class App extends React.Component{
 
     this.state = {
       user: undefined,
-      selectedUser: undefined
     }
 
     this.updateUsername = this.updateUsername.bind(this)
-    this.handleSelectUser = this.handleSelectUser.bind(this)
   }
 
   updateUsername(userId,username){
@@ -33,10 +31,6 @@ export default class App extends React.Component{
         this.setState({user: data})
       }
     )}
-
-  handleSelectUser(selectedUser){
-    this.setState({selectedUser})
-  }
 
   getUser(){
     axios.get('/auth/current_user')
@@ -55,16 +49,16 @@ export default class App extends React.Component{
         ? <Username user={this.state.user} updateUsername={this.updateUsername}/>
         : <Router>
             <div>
-              <Header user={this.state.user} handleSelectUser={this.handleSelectUser}/>
+              <Header user={this.state.user}/>
               <Switch>
                 <Route path="/" exact render={()=>( 
                     <Dashboard user={this.state.user}/>
                 )}/>
                 <Route path="/friends" render={()=>(
-                  <Friends user={this.state.user} handleSelectUser={this.handleSelectUser}/>
+                  <Friends user={this.state.user}/>
                 )}/>
-                <Route render={({history})=>(
-                  <Todos history={history} user={this.state.selectedUser}/>
+                <Route path="/:username" render={(props)=>(
+                  <Todos username={props.match.params.username}/>
                 )}/>
               </Switch>
             </div>

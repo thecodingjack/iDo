@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 let todoSchema = new Schema({
   userId: {type: Schema.Types.ObjectId, ref: 'user'},
   username: String,
-  todoItem: String,
+  title: String,
   amount: Number,
 
 })
@@ -19,13 +19,13 @@ let getUserTodos = (username,cb)=>{
   })
 }
 
-let createTodoItem = (username,todoItem,cb)=>{
-  new Todo({username,todoItem}).save()
+let createTodoList = (username,title,cb)=>{
+  new Todo({username,title}).save()
     .then(newTodo=>cb(null,newTodo))
     .catch(err=>cb(err))
 }
 
 module.exports = {
   getUserTodos,
-  createTodoItem
+  createTodoList
 }

@@ -26,7 +26,7 @@ export default class Friends extends React.Component{
       <div>
         <h2>Your Friends</h2>
         {this.state.friends.map(friend=>(
-          <Link onClick={()=>this.props.handleSelectUser(friend)} to={`/${friend.username}`}>{friend.username}</Link>
+          <Link to={`/${friend.username}`}>{friend.username}</Link>
         ))}
       </div>
     )

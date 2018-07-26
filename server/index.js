@@ -20,7 +20,7 @@ app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan('dev'));
-app.use(session({ secret: 'todo-secret', cookie: { maxAge: 600000 }}))
+app.use(session({ secret: 'todo-secret', cookie: { maxAge: 1000 * 60 * 60 * 24 * 30 }}))
 app.use(passport.initialize());
 app.use(passport.session())
 /******* end of middleware ******/
@@ -35,8 +35,8 @@ app.post('/api/update_username',(req, res)=>{
 })
 
 app.post('/api/todos',(req,res)=>{
-  let {username,todoItem} = req.body
-  todo.createTodoItem(username,todoItem,(err,result)=>{
+  let {username,title} = req.body
+  todo.createTodoList(username,title,(err,result)=>{
     res.send(result)
   })
 })
