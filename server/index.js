@@ -7,6 +7,7 @@ require('./model/model')
 let passport = require('passport')
 require('./services/passport.js');
 let todo = require('./model/todo')
+let user = require('./model/user')
 
 var authRouter = require('./routes/authRoutes.js')
 
@@ -27,16 +28,28 @@ app.use(passport.session())
 app.use('/auth',authRouter)
 app.use(express.static(__dirname + '/../client/dist'));
 
-app.post('/api/todo',(req,res)=>{
-  let {userId,todoItem} = req.body
-  todo.createTodoItem(userId,todoItem,(err,result)=>{
+app.post('/api/update_username',(req, res)=>{
+  user.updateUsername(req.body.userId, req.body.username, (err,result)=>{
     res.send(result)
   })
 })
 
-app.get('/api/todo',(req,res)=>{
-  let {userId} = req.query
-  todo.getUserTodos(userId,(err,results)=>{
+app.post('/api/todos',(req,res)=>{
+  let {username,todoItem} = req.body
+  todo.createTodoItem(username,todoItem,(err,result)=>{
+    res.send(result)
+  })
+})
+
+app.get('/api/todos',(req,res)=>{
+  let {username} = req.query
+  todo.getUserTodos(username,(err,results)=>{
+    res.send(results)
+  })
+})
+
+app.get('/api/friends',(req,res)=>{
+  user.getAllUser((err,results)=>{
     res.send(results)
   })
 })

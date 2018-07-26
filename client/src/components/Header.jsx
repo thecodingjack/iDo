@@ -1,9 +1,12 @@
 import React from 'react'
-
-const Header = ()=>(
+import { Link } from 'react-router-dom'
+const Header = ({user,handleSelectUser})=>(
   <div>
     <div>Header</div>
-    <a href='/auth/logout'>Log Out</a>
+    <Link to='/'>Home </Link>
+    <a onClick={()=>handleSelectUser(user)} href={`/${user.username}`}>Profile </a>
+    <Link to='/friends'>Show Friends </Link>
+    <a href='/auth/logout'>Log Out </a>
   </div>
 )
 

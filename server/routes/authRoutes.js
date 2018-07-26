@@ -2,7 +2,9 @@ let passport = require('passport');
 let authRouter = require('express').Router();
 
 authRouter.get('/google',
-  passport.authenticate('google',{ scope: ['profile','email'] }),
+  passport.authenticate('google',{ 
+    scope: ['profile','email'],
+    prompt: 'select_account'}),
   (req,res)=> res.send(""))
 
 authRouter.get('/google/callback',

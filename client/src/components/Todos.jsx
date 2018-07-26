@@ -1,18 +1,18 @@
 import React from 'react'
-import Header from './Header.jsx'
 import axios from 'axios'
 
 export default class Todos extends React.Component{
   constructor(props){
     super(props)
+    this.username = props.history.location.pathname.substring(1)
+    console.log(this.username)
     this.state = {todos: []}
-
     this.handleInput = this.handleInput.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  getTodo(userId){
-    axios.get('/api/todo',{params: {userId}})
+  getTodo(username){
+    axios.get('/api/todos',{params: {username}})
       .then(res=>this.setState({todos: res.data}))
   }
 
@@ -21,24 +21,21 @@ export default class Todos extends React.Component{
   }
 
   handleSubmit(){
-    this.createTodo(this.props.user._id,this.state.input)
+    this.createTodo(this.username,this.state.input)
   }
 
-  createTodo(userId,todoItem){
-    axios.post('/api/todo',{userId,todoItem})
-      .then(res=>this.getTodo(userId))
+  createTodo(username,todoItem){
+    axios.post('/api/todos',{username,todoItem})
+      .then(res=>this.getTodo(username))
   }
 
   componentDidMount(){
-
-    this.getTodo(this.props.user._id)
+    this.getTodo(this.props.history.location.pathname.substring(1))
   }
 
   render(){
     return(
       <div>
-        <Header/>
-        <div>Welcome {this.props.user.name}</div>
         <h2>Todos</h2>
         <input onChange={(e)=>this.handleInput(e.target.value)}></input>
         <button onClick={()=>this.handleSubmit()}>Create</button>

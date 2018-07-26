@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 let userSchema = new mongoose.Schema({
+  username: {type: String, unique: true, sparse:true}, 
   googleId: {type: String, unique: true},
   email: String,
   name: String
@@ -25,7 +26,21 @@ let deserialize = (id,cb)=>{
   })
 }
 
+let getAllUser = (cb)=>{
+  User.find({}).then(users=>{
+    cb(null,users)
+  })
+}
+
+let updateUsername = (id,username,cb)=>{
+  User.findByIdAndUpdate(id,{
+    $set: {username}
+  },{new: true}).then(user=>cb(null,user))
+}
+
 module.exports = {
   googleSignIn,
-  deserialize
+  deserialize,
+  getAllUser,
+  updateUsername
 }

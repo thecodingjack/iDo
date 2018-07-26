@@ -9,6 +9,10 @@ import axios from 'axios'
 import Login from './Login.jsx'
 import Todos from './Todos.jsx'
 import NotFound from './NotFound.jsx'
+import Friends from './Friends.jsx';
+import Username from './Username.jsx';
+import Header from './Header.jsx';
+import Dashboard from './Dashboard.jsx'
 
 export default class App extends React.Component{
   constructor(props){
@@ -16,19 +20,28 @@ export default class App extends React.Component{
 
     this.state = {
       user: undefined,
+      selectedUser: undefined
     }
+
+    this.updateUsername = this.updateUsername.bind(this)
+    this.handleSelectUser = this.handleSelectUser.bind(this)
+  }
+
+  updateUsername(userId,username){
+    axios.post('/api/update_username',{userId,username})
+      .then(({data})=> {
+        this.setState({user: data})
+      }
+    )}
+
+  handleSelectUser(selectedUser){
+    this.setState({selectedUser})
   }
 
   getUser(){
     axios.get('/auth/current_user')
-      .then(({data})=> {
-        if(data){
-          this.setState({user: data})
-        }else{
-
-        }
-      })
-  }
+      .then(({data})=> this.setState({user: data})
+    )}
 
   componentDidMount(){
     this.getUser()
@@ -37,20 +50,25 @@ export default class App extends React.Component{
   render(){
     return(
       !this.state.user
-      ?<Login/>
-      :<Router>
-        <div>
-          <Switch>
-            <Route path="/" exact render={()=>( 
-                <Todos user={this.state.user}/>
-            )}/>
-            <Route path="/login" render={()=>(
-              <Login/>
-            )}/>
-            <Route component={NotFound}/>
-          </Switch>
-        </div>
-      </Router>
+      ? <Login/>
+      : this.state.user.username === undefined || null
+        ? <Username user={this.state.user} updateUsername={this.updateUsername}/>
+        : <Router>
+            <div>
+              <Header user={this.state.user} handleSelectUser={this.handleSelectUser}/>
+              <Switch>
+                <Route path="/" exact render={()=>( 
+                    <Dashboard user={this.state.user}/>
+                )}/>
+                <Route path="/friends" render={()=>(
+                  <Friends user={this.state.user} handleSelectUser={this.handleSelectUser}/>
+                )}/>
+                <Route render={({history})=>(
+                  <Todos history={history} user={this.state.selectedUser}/>
+                )}/>
+              </Switch>
+            </div>
+          </Router>
     )
   }
 }
