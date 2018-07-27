@@ -62,7 +62,7 @@ export default class Todos extends React.Component{
               </div>
             )}/>
             <Route path={`/${this.props.username}/:id`} render={(props)=>(
-              <TodoDetails id={props.match.params.id} isOwner={this.state.isOwner}/>
+              <TodoDetails id={props.match.params.id} isOwner={this.state.isOwner} currentUser={this.props.currentUser}/>
             )}/>
           </Switch>
         </div>

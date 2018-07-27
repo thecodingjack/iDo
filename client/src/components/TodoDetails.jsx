@@ -24,10 +24,19 @@ export default class TodoDetails extends React.Component{
   handleCommentSubmit(e){
     e.preventDefault();
     let tempComments = [...this.state.comments]
-    tempComments.push(this.state.comment)
+    let newComment = {commentedBy: this.props.currentUser.username, message: this.state.comment}
+    tempComments.push(newComment)
     this.setState({comments: tempComments})
     axios.post('http://localhost:3000/api/todo/comment',{id: this.state.id, comments: tempComments})
     .then(res=>console.log(res.data))
+  }
+
+  deleteTodoItem(todoIdx){
+    if(this.props.isOwner){
+      let tempTodos = this.state.todoItems.filter((todoItem,idx)=>idx!=todoIdx)
+      this.setState({todoItems: tempTodos})
+      this.updateTodoItems(this.state.id,tempTodos)
+    }
   }
 
   getTodoDetails(id){
@@ -53,12 +62,12 @@ export default class TodoDetails extends React.Component{
           <input onChange={(e)=>this.handleInput(e.target.value)}></input>
           <button onClick={()=>this.handleSubmit()}>Add Task</button>
         </div>}
-        {this.state.todoItems.map(todoItem=>(
-          <div>{todoItem}</div>
+        {this.state.todoItems.map((todoItem,idx)=>(
+          <div key={idx} onClick={()=>this.deleteTodoItem(idx)}>{todoItem}</div>
         ))}
         <h3>Comment</h3>
           {this.state.comments.map(comment=>(
-            <div>{comment}</div>
+            <div>{comment.commentedBy} : {comment.message}</div>
           ))}
           <form onSubmit={(e)=>this.handleCommentSubmit(e)}>
             <input onChange={(e)=>this.handleCommentInput(e.target.value)} placeholder="Enter Comment"></input>
