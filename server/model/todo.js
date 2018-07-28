@@ -8,6 +8,7 @@ let todoSchema = new Schema({
   todoItems: Array,
   comments: Array,
   amount: Number,
+  likes: [{type: Schema.Types.ObjectId, ref: 'user'}],
 })
 
 let Todo = mongoose.model('todo', todoSchema)
@@ -50,10 +51,26 @@ let postComment = (id,comments,cb)=>{
     })
 }
 
+let likePost = (todoId,userId,cb)=>{
+  Todo.update(
+    {_id: todoId},
+    {$addToSet: {likes: userId}}
+  ).then(result=>cb(null,result))
+}
+
+let unlikePost = (todoId,userId,cb)=>{
+  Todo.update(
+    {_id: todoId},
+    {$pull: {likes: userId}}
+  ).then(result=>cb(null,result))
+}
+
 module.exports = {
   getUserTodos,
   createTodoList,
   getTodoById,
   updateTodoById,
   postComment,
+  likePost,
+  unlikePost,
 }

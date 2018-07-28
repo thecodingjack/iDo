@@ -55,7 +55,6 @@ app.get('/api/todo',(req,res)=>{
 })
 
 app.post('/api/todo',(req,res)=>{
-  console.log(req.body)
   let{id,todoItems} = req.body
   todo.updateTodoById(id,todoItems,(err,result)=>{
     res.send(result)
@@ -63,9 +62,22 @@ app.post('/api/todo',(req,res)=>{
 })
 
 app.post('/api/todo/comment',(req,res)=>{
-  console.log(req.body)
   let{id,comments} = req.body
   todo.postComment(id,comments,(err,result)=>{
+    res.send(result)
+  })
+})
+
+app.post('/api/todo/like',(req,res)=>{
+  let {todoId,userId} = req.body
+  todo.likePost(todoId,userId,(err,result)=>{
+    res.send(result)
+  })
+})
+
+app.post('/api/todo/unlike',(req,res)=>{
+  let {todoId,userId} = req.body
+  todo.unlikePost(todoId,userId,(err,result)=>{
     res.send(result)
   })
 })
