@@ -83,7 +83,30 @@ app.post('/api/todo/unlike',(req,res)=>{
 })
 
 app.get('/api/friends',(req,res)=>{
-  user.getAllUser((err,results)=>{
+  console.log(req.query.userId)
+  user.getAllUser(req.query.userId,(err,results)=>{
+    console.log({results})
+    res.send(results)
+  })
+})
+
+app.post('/api/addfriend',(req,res)=>{
+  let {senderId, receiverId} = req.body
+  user.sendFriendRequest(senderId,receiverId,(err,results)=>{
+    res.send(results)
+  })
+})
+
+app.get('/api/friend_requests',(req,res)=>{
+  user.getFriendRequests(req.query.userId,(err,results)=>{
+    console.log({results})
+    res.send(results)
+  })
+})
+
+app.post('/api/accept_friend',(req,res)=>{
+  let {senderId, receiverId, accepted} = req.body
+  user.handleFriendRequest(senderId,receiverId,accepted,(err,results)=>{
     res.send(results)
   })
 })
