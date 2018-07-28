@@ -25,7 +25,8 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i, 
-        loader: "file-loader?name=/public/icons/[name].[ext]"
+        include: SRC_DIR,
+        loader: "file-loader?name=public/icons/[name].[ext]"
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,

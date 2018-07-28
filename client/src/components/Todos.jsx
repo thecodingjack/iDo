@@ -5,8 +5,11 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import { Modal, Button } from 'react-bootstrap'
 import { Redirect, Switch } from 'react-router'
 import TodoDetails from './TodoDetails.jsx';
+import IconAdd from './svgs/IconAdd.jsx';
+
 
 
 export default class Todos extends React.Component{
@@ -14,9 +17,14 @@ export default class Todos extends React.Component{
     super(props)
 
     console.log(props.username)
-    this.state = {todos: [], isOwner: props.username === props.currentUser.username}
+    this.state = {todos: [], isOwner: props.username === props.currentUser.username, show: false}
     this.handleInput = this.handleInput.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.toggleShow = this.toggleShow.bind(this)
+  }
+
+  toggleShow(){
+    this.setState({show: !this.state.show})
   }
 
   getTodo(username){
@@ -28,8 +36,10 @@ export default class Todos extends React.Component{
     this.setState({input})
   }
 
-  handleSubmit(){
+  handleSubmit(e){
+    if(e) e.preventDefault();
     this.createTodoList(this.props.username,this.state.input)
+    this.toggleShow()
   }
 
   createTodoList(username,title){
@@ -48,16 +58,36 @@ export default class Todos extends React.Component{
           <Switch>
             <Route path={`/${this.props.username}`} exact render={()=>(
               <div>
-                <h2>Todos</h2>
-                {this.state.isOwner &&
-                  <div> 
-                    <input onChange={(e)=>this.handleInput(e.target.value)}></input>
-                    <button onClick={()=>this.handleSubmit()}>Create A New List</button>
+                <div style={{display: "flex", flexWrap: "wrap"}}>
+                  <h2>Todos</h2>
+
+                  {this.state.isOwner &&
+                  <div onClick={this.toggleShow} style={{margin: "27px 20px 20px 20px", cursor : "pointer"}}>
+                    <IconAdd>Create</IconAdd>
                   </div>}
+                </div>
+
+                <Modal show={this.state.show} onHide={this.toggleShow}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>New list</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <form onSubmit={(e)=>this.handleSubmit(e)}> 
+                      <input autoFocus onChange={(e)=>this.handleInput(e.target.value)} placeholder="e.g. Conference 4/20 List"></input>
+                    </form>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <button className="red-btn" onClick={()=>this.handleSubmit()}>Create</button>
+                  </Modal.Footer>
+                </Modal>
+                
                 {this.state.todos.map(todoList=>(
-                  <li>
-                    <Link to={{ pathname: `/${this.props.username}/${todoList._id}`, state: {id:todoList._id} }}>{todoList.title}</Link>
-                  </li>
+                  <div className="card col-md-3 card-border" style={{margin : '10px', padding: '5px'}}>
+                    <div className="card-body">
+                      <Link className="h4" to={{ pathname: `/${this.props.username}/${todoList._id}`, state: {id:todoList._id} }}>{todoList.title}</Link>
+                      <h6 className="card-text">Your list's snippets</h6>
+                    </div>
+                  </div>  
                 ))}
               </div>
             )}/>

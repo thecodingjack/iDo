@@ -12,7 +12,7 @@ import NotFound from './NotFound.jsx'
 import Friends from './Friends.jsx';
 import Username from './Username.jsx';
 import Header from './Header.jsx';
-import Dashboard from './Dashboard.jsx'
+import Dashboard from './Dashboard.jsx';
 
 export default class App extends React.Component{
   constructor(props){
@@ -50,17 +50,22 @@ export default class App extends React.Component{
         : <Router>
             <div>
               <Header user={this.state.user}/>
-              <Switch>
-                <Route path="/" exact render={()=>( 
-                    <Dashboard user={this.state.user}/>
-                )}/>
-                <Route path="/friends" render={()=>(
-                  <Friends user={this.state.user}/>
-                )}/>
-                <Route path="/:username" render={(props)=>(
-                  <Todos username={props.match.params.username} currentUser={this.state.user}/>
-                )}/>
-              </Switch>
+              <div className="col-md-12">
+                <div className="col-md-3 left-bar">Left Bar</div>
+                <div className="col-md-9">
+                  <Switch>
+                    <Route path="/" exact render={()=>( 
+                      <Dashboard user={this.state.user}/>
+                    )}/>
+                    <Route path="/friends" render={()=>(
+                      <Friends user={this.state.user}/>
+                    )}/>
+                    <Route path="/:username" render={(props)=>(
+                      <Todos username={props.match.params.username} currentUser={this.state.user}/>
+                    )}/>
+                  </Switch>
+                </div>
+              </div>
             </div>
           </Router>
     )
