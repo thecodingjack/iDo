@@ -29,9 +29,6 @@ app.use(passport.session())
 app.use('/auth',authRouter)
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static(__dirname + '/../client/dist'));
-  app.get('*',(req,res)=>{
-    res.sendFile(path.join(__dirname ,'/../client/dist/index.html'));
-  })
 }
 
 app.post('/api/update_username',(req, res)=>{
@@ -117,9 +114,9 @@ app.post('/api/accept_friend',(req,res)=>{
   })
 })
 
-// app.get('/*',(req,res)=>{
-//   res.redirect('/')
-// })
+app.get('*',(req,res)=>{
+  res.sendFile(path.join(__dirname ,'/../client/dist/index.html'));
+})
 
 app.listen(port,()=> console.log('Listening on : ' + port))
 
