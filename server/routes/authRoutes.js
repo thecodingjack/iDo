@@ -10,7 +10,10 @@ authRouter.get('/google',
 
 authRouter.get('/google/callback',
   passport.authenticate('google'),
-  (req,res)=> res.redirect(clientUrl))
+  (req,res)=> {
+    console.log("redirecting")
+    res.redirect(clientUrl)}
+  )
 
 authRouter.get('/logout', (req,res)=>{
   req.logout()
