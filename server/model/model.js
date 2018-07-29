@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('./user')
 require('./todo')
 
-let dbURL = process.env.MONGOLAB_URI||'mongodb://localhost/todo'
+let dbURL = process.env.MONGODB_URI||'mongodb://localhost/todo'
 
 mongoose.connect(dbURL);
 let db = mongoose.connection;
