@@ -51,7 +51,20 @@ export default class App extends React.Component{
             <div>
               <Header user={this.state.user}/>
               <div className="col-md-12">
-                <div className="col-md-3 left-bar">Left Bar</div>
+                <div className="col-md-3 left-bar">
+                  <div style={{padding: '16px', marginLeft: '40px'}}>
+                    <a href='#'>Today</a>
+                  </div>
+                  <div style={{padding: '16px', marginLeft: '40px'}}>
+                    <a href='#'>Next 7 days</a>
+                  </div>
+                  <div style={{padding: '16px', marginLeft: '40px'}}>
+                    <a href='#'>Pinned</a>
+                  </div>
+                  <div style={{padding: '16px', marginLeft: '40px'}}>
+                    <a href='#'>Filter</a>
+                  </div>
+                </div>
                 <div className="col-md-9">
                   <Switch>
                     <Route path="/" exact render={()=>( 

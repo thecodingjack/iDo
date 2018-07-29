@@ -40,44 +40,53 @@ export default class Friends extends React.Component{
   render(){
     return(
       <div>
-        <h4>Friend Requests</h4>
+        {!!this.state.friendRequests.length && <h4>Friend Requests</h4>}
         {this.state.friendRequests.map(friend=>(
-          <div className="card card-border" style={{margin : '10px', padding: '5px'}}>
-            <div className="card-body">
-              <div className="card-left">
+          <div className="card card-border">
+          <div className="card-body" style={{display: "flex"}}>
+            <img className="card-img-left" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Mark_Zuckerberg_F8_2018_Keynote_%28cropped%29.jpg/800px-Mark_Zuckerberg_F8_2018_Keynote_%28cropped%29.jpg"></img>
+            <div style={{display: "flex", justifyContent:"space-between", flexGrow: 1}}>
+              <div className="card-left" style={{padding: "16px"}}>
                 <Link to={`/${friend.username}`}>{friend.username} </Link>
                 <h6 className="card-text">Hi, Please add me</h6>
               </div>
-              <div className="card-right">
-                <button style={{height: "40px", marginTop:"auto", marginBottom:"auto"}} onClick={()=>this.handleFriendRequests(friend._id,this.props.user._id,1)}>Add Friend</button>
+              <div className="card-right" style={{alignSelf: "center"}}>
+                <button className="red-btn" style={{height: "40px", marginRight:"24px"}} onClick={()=>this.handleFriendRequests(friend._id,this.props.user._id,1)}>Add Friend</button>
               </div>
             </div>
-          </div>  
+          </div>
+        </div>
         ))}
         <h4>You may know</h4>
         {this.state.suggestions.map(friend=>(
-          <div className="card card-border" style={{margin : '10px', padding: '5px'}}>
-            <div className="card-body">
-              <div className="card-left">
+          <div className="card card-border">
+          <div className="card-body" style={{display: "flex"}}>
+            <img className="card-img-left" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Mark_Zuckerberg_F8_2018_Keynote_%28cropped%29.jpg/800px-Mark_Zuckerberg_F8_2018_Keynote_%28cropped%29.jpg"></img>
+            <div style={{display: "flex", justifyContent:"space-between", flexGrow: 1}}>
+              <div className="card-left" style={{padding: "16px"}}>
                 <Link to={`/${friend.username}`}>{friend.username} </Link>
-                <h6 className="card-text">Insert cliche description</h6>
+                <h6>Insert cliche description</h6>
               </div>
-              <div className="card-right">
-                <button style={{height: "40px", marginTop:"auto", marginBottom:"auto"}} onClick={()=>this.addFriend(this.props.user._id,friend._id)}>Add Friend</button>
+              <div className="card-right" style={{alignSelf: "center"}}>
+                <button className="red-btn" style={{height: "40px", marginRight:"24px"}} onClick={()=>this.addFriend(this.props.user._id,friend._id)}>Add Friend</button>
               </div>
             </div>
-          </div>  
+          </div>
+        </div>  
         ))}
         <h4>Your Friends</h4>
         {this.state.friends.map(friend=>(
-          <div className="card card-border" style={{margin : '10px', padding: '5px'}}>
-            <div className="card-body">
-              <div className="card-left">
-                <Link to={`/${friend.username}`}>{friend.username} </Link>
-                <h6 className="card-text">Your awesome friend</h6>
-              </div>
-              <div className="card-right">
-                <button style={{height: "40px", marginTop:"auto", marginBottom:"auto"}} onClick={()=>alert("Chat feature will be added in the future")}>Chat</button>
+          <div className="card card-border">
+            <div className="card-body" style={{display: "flex"}}>
+              <img className="card-img-left" src="https://pbs.twimg.com/profile_images/990405493221969920/muN2pHP2_400x400.jpg"></img>
+              <div style={{display: "flex", justifyContent:"space-between", flexGrow: 1}}>
+                <div className="card-left" style={{padding: "16px"}}>
+                  <Link to={`/${friend.username}`}>{friend.username} </Link>
+                  <h6 className="card-text">Your awesome friend</h6>
+                </div>
+                <div className="card-right" style={{alignSelf: "center"}}>
+                  <button className="red-btn" style={{height: "40px", marginRight:"24px"}} onClick={()=>alert("Chat feature will be added in the future")}>Chat</button>
+                </div>
               </div>
             </div>
           </div>  

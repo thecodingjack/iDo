@@ -6,6 +6,7 @@ let userSchema = new Schema({
   googleId: {type: String, unique: true, sparse:true},
   email: String,
   name: String,
+  avatarUrl: String,
   sentFriendRequests: [{type: Schema.Types.ObjectId, ref: 'user'}],
   receivedFriendRequests: [{type: Schema.Types.ObjectId, ref: 'user'}],
   friends: [{type: Schema.Types.ObjectId, ref: 'user'}],
@@ -71,7 +72,7 @@ let handleFriendRequest = (senderId,receiverId,accepted,cb)=>{
           $addToSet: {friends: receiverId}
         }).then(()=>{
           User.findByIdAndUpdate(receiverId,{
-            $addToSet: {friends: receiverId}
+            $addToSet: {friends: senderId}
           }).then(result=> cb(null,result))
         })
       }
