@@ -3,6 +3,7 @@ let session = require('express-session')
 let morgan = require('morgan');
 let parser = require('body-parser');
 let cors = require('cors');
+let path = require('path');
 require('./model/model')
 let passport = require('passport')
 require('./services/passport.js');
@@ -26,7 +27,13 @@ app.use(passport.session())
 /******* end of middleware ******/
 
 app.use('/auth',authRouter)
-app.use(express.static(__dirname + '/../client/dist'));
+
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('client/build'));
+  app.get('*', (req,res)=>{
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+}
 
 app.post('/api/update_username',(req, res)=>{
   user.updateUsername(req.body.userId, req.body.username, (err,result)=>{
