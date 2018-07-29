@@ -6,7 +6,7 @@ let userSchema = new Schema({
   googleId: {type: String, unique: true, sparse:true},
   email: String,
   name: String,
-  avatarUrl: String,
+  avatarUrl: {type: String, default: 'https://ebus.ca/wp-content/uploads/2017/08/profile-placeholder.jpg'},
   sentFriendRequests: [{type: Schema.Types.ObjectId, ref: 'user'}],
   receivedFriendRequests: [{type: Schema.Types.ObjectId, ref: 'user'}],
   friends: [{type: Schema.Types.ObjectId, ref: 'user'}],
@@ -82,7 +82,7 @@ let handleFriendRequest = (senderId,receiverId,accepted,cb)=>{
 
 let getFriendRequests = (userId, cb)=>{
   User.findById(userId, 'receivedFriendRequests friends')
-    .populate('receivedFriendRequests friends', 'username name')
+    .populate('receivedFriendRequests friends', 'username name avatarUrl')
     .then(results=>{
       cb(null,results)
     })
