@@ -11,16 +11,19 @@ export default class Dashboard extends React.Component{
       feeds:[{
         createdBy: {
           _id: '1',
+          username: 'David Kim',
+          avatarUrl: 'https://ebus.ca/wp-content/uploads/2017/08/profile-placeholder.jpg'
+        },
+        text: 'David added a new task to his todolist',
+        link: 'https://i-do-1.herokuapp.com/David%20Kim/5b5df0d1ce221c0004c64f1d'
+      },{
+        createdBy: {
+          _id: '2',
           username: 'Mark Zuckerberg',
           avatarUrl: 'https://pbs.twimg.com/profile_images/990405493221969920/muN2pHP2_400x400.jpg'
         },
         text: 'Mark created a new todolist',
-        link: 'http://localhost:8080/lamkeong/5b59f69c5d30b316851e67a0'
-      // },{
-      //   createdBy: "",
-      //   text: "",
-      //   date: "",
-      //   link: ""
+        link: 'https://i-do-1.herokuapp.com/Mark%20Zuckerberg/5b5ddb865fae750004366734'
       },
       ]
     }

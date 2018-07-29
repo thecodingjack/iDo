@@ -65,7 +65,7 @@ export default class Friends extends React.Component{
             <div style={{display: "flex", justifyContent:"space-between", flexGrow: 1}}>
               <div className="card-left" style={{padding: "16px"}}>
                 <Link to={`/${friend.username}`}>{friend.username} </Link>
-                <h6>Insert cliche description</h6>
+                <h6>Just another human</h6>
               </div>
               <div className="card-right" style={{alignSelf: "center"}}>
                 <button className="red-btn" style={{height: "40px", marginRight:"24px"}} onClick={()=>this.addFriend(this.props.user._id,friend._id)}>Add Friend</button>
