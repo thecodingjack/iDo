@@ -12,8 +12,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
-    "client-dev": "webpack -d --watch",
-    "heroku-postbuild": "webpack -p"
+    "client-dev": "webpack -d --watch"
   },
   "dependencies": {
     "axios": "^0.18.0",

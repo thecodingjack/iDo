@@ -12,9 +12,10 @@ passport.deserializeUser((id,done)=>{
 })
 
 passport.use(new GoogleStrategy({
-  clientID: GOOGLE_CLIENTID,
-  clientSecret: GOOGLE_CLIENTSECRET,
-  callbackURL: "http://localhost:3000/auth/google/callback"
+  clientID: process.env.GOOGLE_CLIENTID || GOOGLE_CLIENTID,
+  clientSecret: process.env.GOOGLE_CLIENTSECRET || GOOGLE_CLIENTSECRET,
+  callbackURL: "/auth/google/callback",
+  proxy: true
   },(accessToken,refreshToken,profile,done)=>{
   user.googleSignIn(profile,done)
 }))
