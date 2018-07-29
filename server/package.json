@@ -1,0 +1,33 @@
+{
+  "name": "i-do-server",
+  "version": "1.0.0",
+  "description": "A todo app",
+  "author": "Jack Lim <github.com/thecodingjack>",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "scripts": {
+    "server-dev": "nodemon index.js",
+    "start": "node index.js",
+    "client": "npm run start --prefix client"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.9.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "mongoose": "^5.2.5",
+    "morgan": "^1.4.1",
+    "mysql": "^2.4.2",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
+    "popper.js": "^1.12.9"
+  },
+  "devDependencies": {
+    "enzyme": "2.8.2",
+    "exports-loader": "0.6.4"
+  }
+}
