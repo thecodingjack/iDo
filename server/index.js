@@ -3,6 +3,7 @@ let session = require('express-session')
 let morgan = require('morgan');
 let parser = require('body-parser');
 let cors = require('cors');
+let path = require('path')
 require('./model/model')
 let passport = require('passport')
 require('./services/passport.js');
@@ -29,7 +30,7 @@ app.use('/auth',authRouter)
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static(__dirname + '/../client/dist'));
   app.get('*',(req,res)=>{
-    res.redirect(__dirname + '/../client/dist/index.html');
+    res.sendFile(path.join(__dirname ,'/../client/dist/index.html'));
   })
 }
 
