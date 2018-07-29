@@ -29,7 +29,7 @@ app.use('/auth',authRouter)
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static(__dirname + '/../client/dist'));
   app.get('*',(req,res)=>{
-    res.sendFile(__dirname + '/../client/dist/index.html');
+    res.redirect(__dirname + '/../client/dist/index.html');
   })
 }
 
