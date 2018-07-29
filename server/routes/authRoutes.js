@@ -1,5 +1,6 @@
 let passport = require('passport');
 let authRouter = require('express').Router();
+let clientUrl = process.env.CLIENT_URL || "http://localhost:8080"
 
 authRouter.get('/google',
   passport.authenticate('google',{ 
@@ -9,11 +10,11 @@ authRouter.get('/google',
 
 authRouter.get('/google/callback',
   passport.authenticate('google'),
-  (req,res)=> res.redirect("http://localhost:8080"))
+  (req,res)=> res.redirect(clientUrl))
 
 authRouter.get('/logout', (req,res)=>{
   req.logout()
-  res.redirect('http://localhost:8080/')
+  res.redirect(clientUrl)
 })
 
 authRouter.get('/current_user', (req, res)=>{

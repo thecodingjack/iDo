@@ -15,10 +15,10 @@ export default class TodoDetails extends React.Component{
   handleLike(){
     let count = this.state.likesCount
     if(this.state.liked){
-      axios.post('http://localhost:3000/api/todo/unlike',{todoId: this.todoId, userId: this.userId})
+      axios.post('../api/todo/unlike',{todoId: this.todoId, userId: this.userId})
       count--
     }else{
-      axios.post('http://localhost:3000/api/todo/like',{todoId: this.todoId, userId: this.userId})
+      axios.post('../api/todo/like',{todoId: this.todoId, userId: this.userId})
       count++
     }
     this.setState({liked: !this.state.liked, likesCount: count})
@@ -54,7 +54,7 @@ export default class TodoDetails extends React.Component{
     let newComment = {commentedBy: this.props.currentUser.username, message: this.state.comment}
     tempComments.push(newComment)
     this.setState({comments: tempComments, comment:''})
-    axios.post('http://localhost:3000/api/todo/comment',{id: this.state.id, comments: tempComments})
+    axios.post('../api/todo/comment',{id: this.state.id, comments: tempComments})
     .then(res=>console.log(res.data))
   }
 
@@ -67,7 +67,7 @@ export default class TodoDetails extends React.Component{
   }
 
   getTodoDetails(id){
-    axios.get('http://localhost:3000/api/todo',{params:{id}})
+    axios.get('../api/todo',{params:{id}})
       .then(res=>{
         let isLiked = res.data.likes.includes(this.userId)
         this.setState({id:res.data._id, title: res.data.title, todoItems: res.data.todoItems, comments:res.data.comments, likesCount: res.data.likes.length, liked: isLiked})
@@ -75,7 +75,7 @@ export default class TodoDetails extends React.Component{
   }
 
   updateTodoItems(id,todoItems){
-    axios.post('http://localhost:3000/api/todo',{id,todoItems})
+    axios.post('../api/todo',{id,todoItems})
       .then(res=>console.log(res.data))
   }
 
