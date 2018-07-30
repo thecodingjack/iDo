@@ -15,7 +15,7 @@ export default class Username extends React.Component{
     return(
       <div>
         <h3>Welcome {this.props.user.name}, please create your username</h3>
-        <input onChange={(e)=>this.handleInput(e.target.value)}></input>
+        <input onChange={(e)=>this.handleInput(e.target.value)} placeholder="Type your username here"></input>
         <button onClick={()=>this.props.updateUsername(this.props.user._id, this.state.username)}>Create account!</button>
       </div>
     )
