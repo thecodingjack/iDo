@@ -13,11 +13,11 @@ import Friends from './Friends.jsx';
 import Username from './Username.jsx';
 import Header from './Header.jsx';
 import Dashboard from './Dashboard.jsx';
+import Ads from './Ads.jsx';
 
 export default class App extends React.Component{
   constructor(props){
     super(props)
-
     this.state = {
       user: undefined,
     }
@@ -42,6 +42,7 @@ export default class App extends React.Component{
   }
   
   render(){
+    console.log(process.env.CLIENT_URL)
     return(
       !this.state.user
       ? <Login/>
@@ -79,6 +80,7 @@ export default class App extends React.Component{
                   </Switch>
                 </div>
               </div>
+              <Ads/>
             </div>
           </Router>
     )
