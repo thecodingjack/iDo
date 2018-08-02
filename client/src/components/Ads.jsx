@@ -10,8 +10,10 @@ render () {
         <ins className='adsbygoogle'
           style={{ display: 'block' }}
           data-adtest= "on"
-          data-ad-client='ca-pub-4707967927304028'
-          data-ad-format='auto' />
+          data-ad-client='ca-app-pub-3940256099942544'
+          data-ad-slot='6300978111'
+          data-ad-format='auto'
+          data-enable-page-level-ads= 'true' />
     );
   }
 }

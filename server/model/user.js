@@ -57,7 +57,6 @@ let sendFriendRequest = (senderId,receiverId,cb)=>{
 }
 
 let handleFriendRequest = (senderId,receiverId,accepted,cb)=>{
-  console.log({senderId,receiverId})
   User.findByIdAndUpdate(senderId,{
     $pull: {sentFriendRequests: receiverId}
   }).then(()=>{
