@@ -1,4 +1,5 @@
 const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 require('../model/model')
 let user = require('../model/user')
@@ -12,6 +13,11 @@ passport.serializeUser((user,done)=>{
 passport.deserializeUser((id,done)=>{
   user.deserialize(id,done)
 })
+
+passport.use(new LocalStrategy(
+  (username, password, done)=>{
+  user.localSignIn({username,password},done)
+}))
 
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENTID,

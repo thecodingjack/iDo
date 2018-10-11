@@ -11,7 +11,11 @@ export default class Login extends React.Component{
   constructor(props){
     super(props);
     this.state = {};
+    this.localSignIn = this.localSignIn.bind(this);
+    this.localSignUp = this.localSignUp.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
+
 
   onSubmit(e){
     this.props.onLogin(this.state.email,this.state.password);
@@ -29,6 +33,20 @@ export default class Login extends React.Component{
   googleSignIn(){
     axios.get('/auth/google')
       .then((res)=>console.log(res))
+      .catch(err=>console.log(err))
+  }
+
+  localSignIn(e){
+    e.preventDefault()
+    axios.get('/auth/login',{params:{username: this.state.email,password: this.state.password}})
+      .then(res=>this.props.getUser())
+      .catch(err=>console.log(err))
+  }
+
+  localSignUp(e){
+    e.preventDefault()
+    axios.post('/auth/signup',{username: this.state.email,password: this.state.password})
+      .then(res=>console.log(res))
       .catch(err=>console.log(err))
   }
 
@@ -50,12 +68,12 @@ export default class Login extends React.Component{
                 <span className="focus-input"></span>
               </div>
               <div className="container-login-form-btn">
-                <button className="login-form-btn" style={{marginBottom:"8px"}}>
+                <button onClick={this.localSignIn} className="login-form-btn" style={{marginBottom:"8px"}}>
                   Log in
                 </button>
-                <div onClick={()=>this.props.onSignUp(this.state.email,this.state.password)} className="login-form-btn">
+                <button onClick={this.localSignUp} className="login-form-btn">
                   Sign Up
-                </div>
+                </button>
                 <a href="/auth/google">Sign In with Google</a>
                 
               </div>

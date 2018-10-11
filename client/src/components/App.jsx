@@ -23,6 +23,7 @@ export default class App extends React.Component{
     }
 
     this.updateUsername = this.updateUsername.bind(this)
+    this.getUser = this.getUser.bind(this)
   }
 
   updateUsername(userId,username){
@@ -45,7 +46,7 @@ export default class App extends React.Component{
     console.log(process.env.CLIENT_URL)
     return(
       !this.state.user
-      ? <Login/>
+      ? <Login getUser={this.getUser}/>
       : this.state.user.username === undefined || null
         ? <Username user={this.state.user} updateUsername={this.updateUsername}/>
         : <Router>

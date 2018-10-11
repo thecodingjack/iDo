@@ -5,6 +5,7 @@ let userSchema = new Schema({
   username: {type: String, unique: true, sparse:true}, 
   googleId: {type: String, unique: true, sparse:true},
   email: String,
+  password: String,
   name: String,
   avatarUrl: {type: String, default: 'https://ebus.ca/wp-content/uploads/2017/08/profile-placeholder.jpg'},
   sentFriendRequests: [{type: Schema.Types.ObjectId, ref: 'user'}],
@@ -13,6 +14,32 @@ let userSchema = new Schema({
 })
 
 let User = mongoose.model('user',userSchema)
+
+let localSignIn = ({username,password},cb)=>{
+  User.findOne({username}).then(existingUser=>{
+    console.log(existingUser)
+    if(!existingUser) cb("Invalid username")
+    if(existingUser.password !== password){
+      cb("Wrong Password")
+    }else{
+      cb(null,existingUser)
+    }
+  }).catch(err=>{
+    console.log(err)
+    cb("err")
+  })
+}
+
+let localSignUp = ({username,password},cb)=>{
+  new User({username,password}).save()
+  .then(user=>{
+    cb(null,user)
+  })
+  .catch(err=>{
+    console.log(err)
+    cb('user exist already')
+  })
+}
 
 let googleSignIn = ({id, emails, displayName},cb)=>{
   User.findOne({googleId: id}).then(existingUser=>{
@@ -88,6 +115,8 @@ let getFriendRequests = (userId, cb)=>{
 }
 
 module.exports = {
+  localSignIn,
+  localSignUp,
   googleSignIn,
   deserialize,
   getAllUser,

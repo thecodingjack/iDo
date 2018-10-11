@@ -42,3 +42,4 @@ node_modules
 .idea/
 bundle.js
 config.js
+mobile/*

@@ -20,7 +20,7 @@
     "enzyme-redux": "^0.1.7",
     "jquery": "^3.3.1",
     "popper.js": "^1.12.9",
-    "react": "^15.6.1",
+    "react": "^16.0.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.6",
